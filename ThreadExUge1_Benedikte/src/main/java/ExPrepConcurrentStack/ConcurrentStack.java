@@ -1,5 +1,8 @@
 package ExPrepConcurrentStack;
 
+import day2Ex5deadlock.Tester;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
 import static javafx.scene.input.KeyCode.T;
 
@@ -47,6 +50,8 @@ public class ConcurrentStack<T> extends Thread {
     //Example usage of OneValueCache
     public static void main(String[] args) {
         ConcurrentStack<Integer> stack = new ConcurrentStack<>();
+//         Tester.DeadLockDetector dld = new Tester.DeadLockDetector();
+//            dld.start();
         for (int i = 0; i < 10; i++) {
             stack.add(i);
         }
@@ -57,5 +62,21 @@ public class ConcurrentStack<T> extends Thread {
 
         }
     }
-
+   public static class DeadLockDetector extends Thread {
+        
+        ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+        
+        public void run() {
+            while (true) {
+                long[] threadIds = bean.findDeadlockedThreads();
+                if (threadIds != null) {
+                    System.out.println("We got ourselves a deadlock");
+                    System.exit(0);
+                } else {
+                    
+                }
+            }
+        }
+        
+    }
 }
