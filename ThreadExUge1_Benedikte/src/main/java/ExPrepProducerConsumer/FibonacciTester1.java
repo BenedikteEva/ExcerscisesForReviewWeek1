@@ -15,45 +15,50 @@ import java.util.concurrent.TimeUnit;
  * @author Ejer
  */
 public class FibonacciTester1 {
-
+    
+    static ArrayBlockingQueue<Long> S1 = new ArrayBlockingQueue(5);
+  static FibonacciConsumer fc = new FibonacciConsumer();
+   static FibonnaciProducer fb = new FibonnaciProducer(S1);
     public static void main(String[] args) throws InterruptedException {
-        FibonnaciProducer fb = new FibonnaciProducer();
-        ArrayBlockingQueue<Long> S1 = new ArrayBlockingQueue(5);
 
+       
+      
         Thread P1 = new Thread(new Runnable() {
             @Override
             public void run() {
-
-                fb.run();
-            }
-        });
+     
+         
+             fb.run();
+        }});
 
         Thread P2 = new Thread(() -> {
-            fb.run();
+        
+         fb.run();
         });
 
         Thread P3 = new Thread(() -> {
-            fb.run();
+          fb.run();
         });
 
         Thread P4 = new Thread(() -> {
-            fb.run();
+        fb.run();
         });
 
         Thread C1 = new Thread(() -> {
-            FibonacciConsumer fc = new FibonacciConsumer();
+          
             fc.run();
-            System.out.println("Fibonaccinumbers sum: " + fc.getSumTotal());
+          
+          
         });
         long start = System.nanoTime();
         P1.start();
-  
         P2.start();
         P3.start();
         P4.start();
         C1.start();
         long end = System.nanoTime();
-        System.out.println(end - start);
-
+        System.out.println("Nanotime"+(end - start));
+           System.out.println("FibonacciNumbers sum: " + fc.getSumTotal());
+            
     }
 }

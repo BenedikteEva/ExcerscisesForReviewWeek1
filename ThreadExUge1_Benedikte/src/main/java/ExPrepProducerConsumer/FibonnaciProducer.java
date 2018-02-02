@@ -5,10 +5,9 @@
  */
 package ExPrepProducerConsumer;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,37 +15,16 @@ import java.util.concurrent.ArrayBlockingQueue;
  */
 public class FibonnaciProducer implements Runnable {
 
-   ArrayBlockingQueue<Long> S1;
+    private final ArrayBlockingQueue<Long> S1;
 
-  
-     public static List fibonacciBase() {
-        List  fb = new ArrayList<>();
-        fb.add(4);
-        fb.add(5);
-        fb.add(8);
-        fb.add(12);
-        fb.add(21);
-        fb.add(22);
-        fb.add(34);
-        fb.add(35);
-        fb.add(36);
-        fb.add(37);
-        fb.add(42);
+    public FibonnaciProducer(ArrayBlockingQueue<Long> S1) {
+        this.S1 = S1;
 
-        return fb;
-    }
-    
-  
-
-    public FibonnaciProducer(ArrayBlockingQueue<Long> FibonacciProduced) {
-        this.S1 = FibonacciProduced;
     }
 
-    FibonnaciProducer() {
-     
-    }
+   
 
-    private synchronized long fib(long n) {
+    public synchronized long fib(long n) {
         if ((n == 0) || (n == 1)) {
             return n;
         } else {
@@ -56,17 +34,21 @@ public class FibonnaciProducer implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 0; i <fibonacciBase().size(); i++) {
-          
-         
-              S1.offer(fib((int) fibonacciBase().get(i)));
         
-                
-         
-         
+        S1.offer((fib(4)));
+        S1.offer((fib(5)));
+        S1.offer((fib(8)));
+        S1.offer((fib(12)));
+        S1.offer((fib(21)));
+        S1.offer((fib(22)));
+        S1.offer((fib(34)));
+        S1.offer((fib(35)));
+        S1.offer((fib(36)));
+        S1.offer((fib(37)));
+        S1.offer((fib(42)));
+      
           
-    
         }
     }
 
-}
+

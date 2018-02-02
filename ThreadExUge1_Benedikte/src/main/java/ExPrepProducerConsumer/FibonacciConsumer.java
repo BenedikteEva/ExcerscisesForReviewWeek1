@@ -17,53 +17,45 @@ import java.util.logging.Logger;
  */
 public class FibonacciConsumer implements Runnable {
 
+    private ArrayBlockingQueue<Long> S1;
     private ArrayBlockingQueue<Long> S2;
-    volatile long sumTotal = 0;
+    long sumTotal = 0;
 
-    List<Long> fibonacciEnd = new ArrayList<>(11);
+    List<Long> fibonacciEnd = new ArrayList<>();
 
     public FibonacciConsumer(ArrayBlockingQueue<Long> S2) {
         this.S2 = S2;
     }
 
     FibonacciConsumer() {
-       
-    }
 
-    
+    }
 
     @Override
     public void run() {
 
-        for (int i = 0; i < S2.size(); i++) {
+     
 
-          
+            try {
 
+                  FibonnaciProducer fb = new FibonnaciProducer(S1);
+            
+                    S2.offer((S1.take()));
+                    fibonacciEnd.add(S2.take());
+                    System.out.println("børge"+fibonacciEnd);
+         
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FibonacciConsumer.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-               try { 
-                
-                
-                fibonacciEnd.add(S2.take());
-                
-                
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(FibonacciConsumer.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                
-                
-      
-                
-           
-        }
+        
     }
 
     public long getSumTotal() {
-        
-      
+
         for (int i = 0; i < fibonacciEnd.size(); i++) {
 
-            sumTotal+= fibonacciEnd.get(i);
+            sumTotal += fibonacciEnd.get(i);
         }
 
         return sumTotal;

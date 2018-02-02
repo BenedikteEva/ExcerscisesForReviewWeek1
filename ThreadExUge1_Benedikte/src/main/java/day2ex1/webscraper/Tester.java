@@ -75,7 +75,7 @@ long end = System.nanoTime();
 
 
 
-System.out.println("Time Parallel: "+(end-start));
+System.out.println("Time : "+(end-start));
 
 
     }

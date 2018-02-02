@@ -1,17 +1,11 @@
 package ExPrepConcurrentStack;
 
-
-
 import java.util.ArrayList;
+import static javafx.scene.input.KeyCode.T;
 
+public class ConcurrentStack<T> extends Thread {
 
-
-
-
-
-
-public class ConcurrentStack<T> {
-
+   
     private final ArrayList<T> stack;
     private int size;
 
@@ -43,7 +37,13 @@ public class ConcurrentStack<T> {
             return stack.get(lastIndex);
         }
     }
+ @Override
+    public void run() {
+          for (int i = 0; i < 10; i++) {
+     stack.add((T) T );
+        }
 
+    }
     //Example usage of OneValueCache
     public static void main(String[] args) {
         ConcurrentStack<Integer> stack = new ConcurrentStack<>();
@@ -54,7 +54,8 @@ public class ConcurrentStack<T> {
             if (stack.peek() != null) {
                 System.out.println(stack.remove());
             }
-        
+
         }
     }
+
 }
