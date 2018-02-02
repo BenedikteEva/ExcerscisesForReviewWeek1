@@ -1,4 +1,4 @@
-# ExcerscisesForReviewWeek1
+# ExcercisesForReviewWeek1
 
 
 Opgavebesvarelserne udover kode kan tilgås på dette link: 
