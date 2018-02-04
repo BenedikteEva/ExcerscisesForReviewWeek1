@@ -49,7 +49,7 @@ public class FibonacciConsumer implements Runnable {
             } else {
                 
                 fibonacciEnd.add( fibOne);
-                System.out.println("børge:  " + fibonacciEnd);
+//                System.out.println("børge:  " + fibonacciEnd);
                 fibboTemp=S2.poll();
             }
 
