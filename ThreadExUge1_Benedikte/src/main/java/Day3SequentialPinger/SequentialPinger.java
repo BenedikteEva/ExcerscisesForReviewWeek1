@@ -9,12 +9,14 @@ import static Day3SequentialPinger.SequentialPinger.getStatus;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+ import java.util.concurrent.Callable;
 
-public class SequentialPinger {
+public abstract class SequentialPinger  implements Callable<String> {
 
     public static String getStatus(String url) throws IOException {
 
@@ -38,10 +40,31 @@ public class SequentialPinger {
         }
         return result;
     }
+    public String call(String [] hostList) throws Exception {
+        
+        
+        
+           for (int i = 0; i < hostList.length; i++) {
+        
+            String url = hostList[i];
+            String status = getStatus(url);
+ 
+            System.out.println(url + "\t\tStatus:" + status);
+          }
+        
+        return null;
+        
+     
+        }
+ 
+    
+    
+    
+    
 
     public static void main(String args[]) throws Exception {
 
-        ExecutorService es = Executors.newFixedThreadPool(5);
+        ExecutorService es = Executors.newFixedThreadPool(50);
 
         String[] hostList = {"http://crunchify.com", "http://yahoocom",
             "http://www.ebay.com", "http://google.com",
@@ -58,34 +81,13 @@ public class SequentialPinger {
             "http://docs.oracle.com", "https://fronter.com",
             "http://imgur.com/", "http://www.imagemagick.org"
         };
-long start = System.nanoTime();
-//        for (int i = 0; i < hostList.length; i++) {
-//
-//            String url = hostList[i];
-//            String status = getStatus(url);
-//
-//            System.out.println(url + "\t\tStatus:" + status);
-//        }
-//      
+        
+        
+    }}
 
-es.execute(new Runnable() {
-            @Override
-            public void run() {
-             
-                for (int i = 0; i < hostList.length; i++) {
-                    try {
-                        SequentialPinger.getStatus(hostList[i]);
-                        String url = hostList[i];
-                        String status = getStatus(url);
-                        System.out.println(url + "\t\tStatus:" + status);
-                    } catch (IOException ex) {
-                        Logger.getLogger(SequentialPinger.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+   
+   
 
-            }
-        });        es.shutdown();
-long end = System.nanoTime();System.out.println("Time Parallel: "+(end-start));
 
-    }
-}
+
+

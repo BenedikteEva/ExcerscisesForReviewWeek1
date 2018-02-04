@@ -8,6 +8,7 @@ package ExPrepProducerConsumer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,6 +20,7 @@ public class FibonacciConsumer implements Runnable {
 
     private ArrayBlockingQueue<Long> S1;
     private ArrayBlockingQueue<Long> S2;
+    BlockingQueue <Long>Fibbos;
     long sumTotal = 0;
 
     List<Long> fibonacciEnd = new ArrayList<>();
@@ -33,22 +35,25 @@ public class FibonacciConsumer implements Runnable {
 
     @Override
     public void run() {
+        boolean moreFibonaccisToConsume = true;
 
-     
-
+        while (moreFibonaccisToConsume) {
             try {
-
-                  FibonnaciProducer fb = new FibonnaciProducer(S1);
-            
-                    S2.offer((S1.take()));
+                long fibOne = Fibbos.peek();
+                FibonnaciProducer fb = new FibonnaciProducer(S1);
+                if (fibOne == 0) {
+                    moreFibonaccisToConsume = false;
+                    System.out.println("end");
+                } else {
+                    S2.offer((Fibbos.poll()));
                     fibonacciEnd.add(S2.take());
-                    System.out.println("børge"+fibonacciEnd);
-         
+                    System.out.println("børge" + fibonacciEnd);
+                }
             } catch (InterruptedException ex) {
                 Logger.getLogger(FibonacciConsumer.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        
+        }
     }
 
     public long getSumTotal() {
