@@ -19,38 +19,38 @@ import java.util.logging.Logger;
 public class FibonacciConsumer implements Runnable {
 
     private ArrayBlockingQueue<Long> S1;
-    private ArrayBlockingQueue<Long> S2;
-    BlockingQueue <Long>Fibbos;
+  
+    BlockingQueue <Long>S2;
     long sumTotal = 0;
+    long fibboTemp;
 
     List<Long> fibonacciEnd = new ArrayList<>();
 
-    public FibonacciConsumer(ArrayBlockingQueue<Long> S2) {
+    public FibonacciConsumer(BlockingQueue<Long> S2) {
         this.S2 = S2;
     }
 
-    FibonacciConsumer() {
-
+    FibonacciConsumer(ArrayBlockingQueue<Long> S1, ArrayBlockingQueue<Long> S2) {
+         this.S1 = S1;
+      this.S2 = S2;
     }
+
+  
 
     @Override
     public void run() {
         boolean moreFibonaccisToConsume = true;
 
         while (moreFibonaccisToConsume) {
-            try {
-                long fibOne = Fibbos.peek();
-                FibonnaciProducer fb = new FibonnaciProducer(S1);
-                if (fibOne == 0) {
-                    moreFibonaccisToConsume = false;
-                    System.out.println("end");
-                } else {
-                    S2.offer((Fibbos.poll()));
-                    fibonacciEnd.add(S2.take());
-                    System.out.println("børge" + fibonacciEnd);
-                }
-            } catch (InterruptedException ex) {
-                Logger.getLogger(FibonacciConsumer.class.getName()).log(Level.SEVERE, null, ex);
+            long fibOne = S2.peek();
+            if (fibOne == 0) {
+                moreFibonaccisToConsume = false;
+                System.out.println("end");
+            } else {
+                
+                fibonacciEnd.add( fibOne);
+                System.out.println("børge:  " + fibonacciEnd);
+                fibboTemp=S2.poll();
             }
 
         }

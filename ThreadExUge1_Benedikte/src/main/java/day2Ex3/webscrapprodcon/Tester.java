@@ -32,7 +32,7 @@ public class Tester {
     //Holds the Documents produced by the producers. This is Q2 in the exercise figure
     ArrayBlockingQueue<Document> producedDocuments = new ArrayBlockingQueue(10);
    
-    ExecutorService es = Executors.newFixedThreadPool(1);
+    ExecutorService es = Executors.newFixedThreadPool(4);
     //Create and start the four Producers (P1-P4)
     
 //      Thread P1 = new Thread(new Runnable() {

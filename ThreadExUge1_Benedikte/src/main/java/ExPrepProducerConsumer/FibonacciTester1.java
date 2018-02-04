@@ -17,7 +17,8 @@ import java.util.concurrent.TimeUnit;
 public class FibonacciTester1 {
     
     static ArrayBlockingQueue<Long> S1 = new ArrayBlockingQueue(5);
-  static FibonacciConsumer fc = new FibonacciConsumer();
+     static ArrayBlockingQueue<Long> S2 = new ArrayBlockingQueue(5);
+  static FibonacciConsumer fc = new FibonacciConsumer(S1,S2);
    static FibonnaciProducer fb = new FibonnaciProducer(S1);
     public static void main(String[] args) throws InterruptedException {
 

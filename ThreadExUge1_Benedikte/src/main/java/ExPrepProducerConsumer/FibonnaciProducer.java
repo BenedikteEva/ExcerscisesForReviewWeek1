@@ -17,22 +17,18 @@ import java.util.logging.Logger;
  */
 public class FibonnaciProducer implements Runnable {
 
- BlockingQueue<Long> S1;
-    BlockingQueue<Long> Fibbos;
+    BlockingQueue<Long> S1;
+    BlockingQueue<Long> S2;
 
-    public FibonnaciProducer(ArrayBlockingQueue<Long> S1, ArrayBlockingQueue<Long> Fibbos) {
+    public FibonnaciProducer(BlockingQueue<Long> S1,BlockingQueue<Long> S2) {
         this.S1 = S1;
-        this.Fibbos = Fibbos;
+        this.S2 = S2;
     }
 
     FibonnaciProducer(ArrayBlockingQueue<Long> S1) {
-     
+
     }
 
-//  public FibonnaciProducer(ArrayBlockingQueue<Long> S1) {
-//        this.S1 = S1;
-//
-//    }
     public synchronized long fib(long n) {
         if ((n == 0) || (n == 1)) {
             return n;
@@ -43,18 +39,20 @@ public class FibonnaciProducer implements Runnable {
 
     @Override
     public void run() {
+ 
+        boolean moreFibsToFecth = true;
+        while (moreFibsToFecth) {
+           
 
-        boolean moreUrlsToFecth = true;
-        while (moreUrlsToFecth) {
-            long fibbo = S1.peek();
-//TODO: Use the right method on urlsToUse to set this value to either a string (with a url) or null
-            if (fibbo == 0) {
-                moreUrlsToFecth = false;
+            if (S1.isEmpty()) {
+                moreFibsToFecth = false;
             } else {
 
-                Fibbos.offer(fibbo);
+                long fibbo = S1.peek();
+             
+                S2.offer(fibbo);
                 S1.poll();
-                //TODO Use the right method on producedDocuments to add this doc to the queue
+            
 
             }
 
